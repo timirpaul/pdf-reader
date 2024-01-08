@@ -25,7 +25,7 @@ const newPostController = async (req, res) => {
     const filePath = req.file?.path;
     const {email , name ,firebaseFileURL}=req.body
 
-    console.log(req.body);
+    // console.log(req.body);
     // console.log("email",email);
     // console.log("name",name);
     // console.log("firebaseFileURL",firebaseFileURL);
@@ -40,7 +40,7 @@ const newPostController = async (req, res) => {
     const text = profileText.toLowerCase().split(" ");
 
     // console.log("profileText", profileText);
-    console.log("profilePath", filePath);
+    // console.log("profilePath", filePath);
 
     const withoutEmptyElements = newArrayWithoutEmptyElements(text);
     // console.log("text", withoutEmptyElements);
@@ -59,7 +59,7 @@ const newPostController = async (req, res) => {
     await fs.unlinkSync(filePath);
     res.status(200).json({  msg: "success",profile });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ msg: error });
   }
 };
@@ -70,22 +70,22 @@ const searchController = async (req, res) => {
   try {
     let data ,arr;
     const {search }  = req.body;
-    console.log(search );
+    // console.log(search );
     if(!search) return res.status(200).json("Invalid Search");
   // if(search.indexOf(",") != -1) console.log("true",search.indexOf(","),search.indexOf(",") != -1 )
     if(search.indexOf(",") != -1){
        arr = search.toLowerCase().replace(/\s/g, "").split(",");
-      console.log(arr , "All");
+      // console.log(arr , "All");
        data = await Profile.find({ Text: { $all: arr } });
     }else{
        arr = search.toLowerCase().replace(/\s/g, "").split("/");
-      console.log("/",arr);
+      // console.log("/",arr);
        data = await Profile.find({ Text: { $in: arr } });
     }
     // arr = search.toLowerCase().replace(/\s/g, "").split(",");
     // console.log(arr);
     //  data = await Profile.find({ Text: { $in: arr } });
-    console.log(data.length);
+    // console.log(data.length);
     res.status(200).json({ msg: "success", data });
   } catch (error) {
     console.log("err",error);
@@ -97,7 +97,7 @@ const searchController = async (req, res) => {
 const deleteController = async (req,res)=>{
   try {
     const {_id} = req.body
-    console.log(_id);
+    // console.log(_id);
     const resData = await Profile.findByIdAndDelete(_id)
     res.status(200).json({msg:"success",resData})
   } catch (error) {
